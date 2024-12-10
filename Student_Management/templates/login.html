@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('"C:/Users/WiNDOWS/Downloads/bg.jpg"'); /* Use the path to the uploaded image */
+            background-size: cover; /* Scale the background image to cover the entire area */
+            background-color: #ccc;
+            background-repeat: no-repeat; /* Prevent the image from repeating */
+            background-position: center; /* Center the image */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .login-container {
+            font-family: 'Times New Roman', Times, serif;
+            background-color: rgba(250, 117, 117, 0.8); /* Slight transparency to let the background image show through */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .form-group {
+            margin-bottom: 30px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="password"] {
+            font-family: 'Times New Roman', Times, serif;
+            width: 100%;
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        input[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        .error-message {
+            color: #ff0000;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Login</h2>
+        <form action="{{ url_for('login') }}" method="post">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <input style="font-family: 'Times New Roman', Times, serif;" type="submit" value="Login">
+        </form>
+        <p>Don't have an account? <a href="{{ url_for('register') }}">Register here</a>.</p>
+        {% if error %}
+        <p class="error-message">{{ error }}</p>
+        {% endif %}
+    </div>
+</body>
+</html>

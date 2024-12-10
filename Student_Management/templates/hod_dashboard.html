@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HOD Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Lora:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .dashboard-container {
+            text-align: center;
+            margin: 50px auto;
+            padding: 30px;
+            max-width: 900px;
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            font-family: 'Lora', serif;
+            color: #333;
+            font-size: 2rem;
+            margin-top: 0;
+        }
+
+        h3 {
+            color: #ff7f50;
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        ul li {
+            margin-bottom: 12px;
+            font-size: 1.1rem;
+            color: #555;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 1rem;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .logout-link {
+            color: #007bff;
+            text-decoration: none;
+            font-size: 1.1rem;
+            margin-top: 20px;
+        }
+
+        .logout-link:hover {
+            text-decoration: underline;
+        }
+
+        .details-container {
+            margin-top: 30px;
+            display: flex;
+            justify-content: space-around;
+            gap: 30px;
+            text-align: left;
+        }
+
+        .teacher-details,
+        .student-details {
+            width: 45%;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .teacher-details ul,
+        .student-details ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .teacher-details ul li,
+        .student-details ul li {
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+            color: #555;
+        }
+
+        .teacher-details ul li a,
+        .student-details ul li a {
+            color: #e74c3c;
+            text-decoration: none;
+        }
+
+        .teacher-details ul li a:hover,
+        .student-details ul li a:hover {
+            text-decoration: underline;
+        }
+
+        .form-container {
+            margin-top: 30px;
+            text-align: left;
+        }
+
+        .form-container h3 {
+            font-size: 1.5rem;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <h2>Welcome HOD!</h2>
+        
+        <h3>Teachers:</h3>
+        <ul>
+            {% for teacher in teachers %}
+            <li>{{ teacher.username }}</li>
+            {% endfor %}
+        </ul>
+
+        <h3>Students:</h3>
+        <ul>
+            {% for student in students %}
+            <li>{{ student.username }}</li>
+            {% endfor %}
+        </ul>
+
+        <!-- Form to add new teacher -->
+        <div class="form-container">
+            <h3>Add New Teacher</h3>
+            <form action="{{ url_for('hod_dashboard') }}" method="post">
+                <input type="text" name="username" placeholder="Username" required>
+                <input type="password" name="password" placeholder="Password" required>
+                <input type="hidden" name="role" value="teacher">
+                <button type="submit">Add Teacher</button>
+            </form>
+        </div>
+
+        <!-- Form to add new student -->
+        <div class="form-container">
+            <h3>Add New Student</h3>
+            <form action="{{ url_for('hod_dashboard') }}" method="post">
+                <input type="text" name="username" placeholder="Username" required>
+                <input type="password" name="password" placeholder="Password" required>
+                <input type="hidden" name="role" value="student">
+                <button type="submit">Add Student</button>
+            </form>
+        </div>
+
+        <a href="{{ url_for('logout') }}" class="logout-link">Logout</a>
+    </div>
+
+    <h2>Teacher & Student Details</h2>
+    <div class="details-container">
+        <div class="teacher-details">
+            <h3>Teachers:</h3>
+            <ul>
+                {% for teacher in teachers %}
+                <li>{{ teacher.username }} - {{ teacher.password }} <a href="{{ url_for('delete_user', user_id=teacher.id) }}">Delete</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="student-details">
+            <h3>Students:</h3>
+            <ul>
+                {% for student in students %}
+                <li>{{ student.username }} - {{ student.password }} <a href="{{ url_for('delete_user', user_id=student.id) }}">Delete</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

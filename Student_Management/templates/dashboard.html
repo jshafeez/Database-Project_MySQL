@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h2>Welcome to Dashboard</h2>
+        {% if user_role == 'admin' %}
+            <p>You have admin privileges.</p>
+        {% elif user_role == 'hod' %}
+            <p>You have HOD privileges.</p>
+        {% elif user_role == 'teacher' %}
+            <p>You have teacher privileges.</p>
+        {% else %}
+            <p>You have student privileges.</p>
+        {% endif %}
+        <a href="{{ url_for('logout') }}">Logout</a>
+    </div>
+</body>
+</html>

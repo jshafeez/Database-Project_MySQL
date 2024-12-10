@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="dashboard-container">
+        <h2>Welcome Student!</h2>
+        
+        <h3>Your Information:</h3>
+        <ul>
+            <li><strong>Username:</strong> {{ current_user.username }}</li>
+            <!-- Add more information about the student here -->
+        </ul>
+        
+        <!-- Display the routine -->
+        <h2>Routine</h2>
+        <div class="routine-container">
+            {% if routine %}
+                <p>{{ routine }}</p>
+            {% else %}
+                <p>No routine available.</p>
+            {% endif %}
+        <ul>
+            {% for student in students %}
+            <li>{{ student.username }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+        <a href="{{ url_for('logout') }}" class="logout-link">Logout</a>
+</body>
+</html>
